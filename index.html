@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AI Quiz Generator</title>
+  <title>AI Flashcard Generator</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
@@ -68,7 +68,7 @@
       font-size: 16px;
       font-weight: 500;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: 0.3s;
     }
 
     button:hover {
@@ -81,9 +81,10 @@
 
     .flashcard {
       background: #f3f4f6;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 15px;
+      display: inline-block;
+      width: 100%;
+      height: 200px;
+      margin: 1rem;      
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
       transition: transform 0.2s;
     }
@@ -92,23 +93,50 @@
       transform: translateY(-3px);
     }
 
-    .flashcard p {
-      margin-top: 10px;
-      color: #374151;
-    }
+    .innercard {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;;
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+      perspective: 1000px;
+      }
 
-    .flashcard button {
-      background: #10b981;
-      margin-top: 10px;
-      padding: 8px 12px;
-      font-size: 14px;
-      border-radius: 6px;
-      font-weight: 500;
-    }
+    .innercard.flipped {
+      transform: rotateY(180deg);
+    } 
 
-    .flashcard button:hover {
-      background: #059669;
-    }
+      .cardfront, .cardback {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  .cardfront {
+    background-color: #ffffff;
+    z-index: 2;
+  }
+
+  .cardback {
+    background-color: #2563eb;
+    color: white;
+    transform: rotateY(180deg);
+  }
 
     .loading {
       text-align: center;
@@ -190,14 +218,24 @@ Content: ${inputText}`;
       container.innerHTML = "";
 
       cards.forEach((card, i) => {
-        const div = document.createElement("div");
-        div.className = "flashcard";
-        div.innerHTML = `
-          <strong>Q${i + 1}:</strong> ${card.question}<br>
-          <button onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">Show Answer</button>
-          <p style="display:none;"><strong>A:</strong> ${card.answer}</p>
+        const flashcard = document.createElement("div");
+        flashcard.className = "flashcard";
+        const innercard = document.createElement("div");
+        innercard.className = "innercard";
+        innercard.innerHTML = `
+          <div class="cardfront">
+            <strong>Q${i + 1}:</strong> ${card.question}
+          </div>
+          <div class="cardback">
+            <strong>A:</strong> ${card.answer}
+          </div>
         `;
-        container.appendChild(div);
+
+        innercard.addEventListener("click", function() {
+          this.classList.toggle("flipped");
+        });
+        flashcard.appendChild(innercard);
+        container.appendChild(flashcard);
       });
     }
   </script>
