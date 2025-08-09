@@ -6,29 +6,82 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
       font-family: 'Inter', sans-serif;
       scroll-behavior: smooth;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      background: #f4f2f0;
+      background: #f8fafc;
+    }
+
+    .header {
+      min-height: 60vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
-      padding: 40px 20px;
+      align-items: center;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #4a90e2, #50c878);
+      position: relative;
+      padding: 2rem;
+    }
+
+    .header h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .header p {
+      font-size: 1.3rem;
+      max-width: 700px;
+      line-height: 1.6;
+      margin: 0 auto;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+
+    .custom-shape-divider-bottom-1754690899 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+        transform: rotate(180deg);
+    }
+
+    .custom-shape-divider-bottom-1754690899 svg {
+        position: relative;
+        display: block;
+        width: calc(100% + 1.3px);
+        height: 150px;
+    }
+
+    .custom-shape-divider-bottom-1754690899 .shape-fill {
+        fill: #FAF9F6;
+    }
+
+    .main-content {
+      background: #FAF9F6;
+      position: relative;
+      z-index: 2;
+      padding: 60px 20px 40px;
+      min-height: 50vh;
     }
 
     .container {
-      width: 100%;
-      max-width: 600px;
+      max-width: 800px;
+      margin: 0 auto;
       background: #ffffff;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     }
 
     h2 {
@@ -48,20 +101,34 @@
       border: 1px solid #d1d5db;
       resize: none;
       margin-bottom: 15px;
+      transition: border-color 0.3s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #20563f;
+      box-shadow: 0 0 0 3px rgba(32, 86, 63, 0.1);
     }
 
     .slider {
       margin: 15px 0;
     }
 
+    .slider label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #374151;
+    }
+
     input[type="range"] {
       width: 100%;
-      accent-color:#20563f
+      accent-color: #4a90e2;
     }
 
     button {
       width: 100%;
-      background-color: #20563f;
+      background-color: #4a90e2;
       color: white;
       border: none;
       padding: 12px;
@@ -69,11 +136,13 @@
       font-size: 16px;
       font-weight: 500;
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.3s ease;
     }
 
     button:hover {
-      background-color: #194532;
+      background-color: #2b5484;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 15px rgba(32, 86, 63, 0.3);
     }
 
     .response {
@@ -82,83 +151,113 @@
 
     .flashcard {
       background: #f3f4f6;
-      display: inline-block;
+      display: block;
       width: 100%;
       height: 200px;
-      margin-top: 5px;
+      margin-bottom: 20px;
+      border-radius: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      transition: transform 0.2s;
+      transition: transform 0.2s ease;
+      perspective: 1000px;
     }
 
     .flashcard:hover {
       transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     }
 
     .innercard {
-      position: center;
+      position: relative;
       width: 100%;
       height: 100%;
-      text-align: center;;
-      border-radius: 12px;
-      background: #ffffff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+      text-align: center;
       cursor: pointer;
       transform-style: preserve-3d;
-      transition: transform 0.6s;
-      perspective: 1000px;
-      }
+      transition: transform 0.6s ease;
+    }
 
     .innercard.flipped {
       transform: rotateY(180deg);
-    } 
+    }
 
-      .cardfront, .cardback {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-  }
+    .cardfront, .cardback {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
 
-  .cardfront {
-    background-color: #ffffff;
-    z-index: 2;
-  }
+    .cardfront {
+      background-color: #ffffff;
+      color: #1f2937;
+      border: 2px solid #e5e7eb;
+    }
 
-  .cardback {
-    background-color: #20563f;
-    color: white;
-    transform: rotateY(180deg);
-  }
+    .cardback {
+      background: linear-gradient(135deg, #4a90e2, #50c878);
+      color: white;
+      transform: rotateY(180deg);
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.1);
+    }
 
     .loading {
       text-align: center;
       color: #6b7280;
       font-style: italic;
+      padding: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2.5rem;
+      }
+      
+      .header p {
+        font-size: 1.1rem;
+      }
+      
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>AI Flashcard Generator</h2>
-    <textarea id="promptInput" placeholder="Paste your study material here..."></textarea>
-
-    <div class="slider">
-      <label for="mySlider">Number of flashcards: <span id="sliderValue">5</span></label>
-      <input type="range" id="mySlider" min="1" max="10" value="5" oninput="document.getElementById('sliderValue').textContent = this.value">
+  <div class="header">
+    <h1>AI Flashcard Generator</h1>
+    <p>Transform your study material into interactive flashcards using the power of AI. Simply paste your content and let our intelligent system create personalized study cards for you.</p>
+    
+    <div class="custom-shape-divider-bottom-1754690899">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+        <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+        <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+      </svg>
     </div>
+  </div>
 
-    <button onclick="askGemini()">Generate Flashcards</button>
+  <div class="main-content">
+    <div class="container">
+      <h2>Create Your Flashcards</h2>
+      <textarea id="promptInput" placeholder="Paste your study material here... (e.g., lecture notes, textbook excerpts, definitions, etc.)"></textarea>
 
-    <div class="response" id="responseOutput"></div>
+      <div class="slider">
+        <label for="mySlider">Number of flashcards: <span id="sliderValue">5</span></label>
+        <input type="range" id="mySlider" min="1" max="10" value="5" oninput="document.getElementById('sliderValue').textContent = this.value">
+      </div>
+
+      <button onclick="askGemini()">Generate Flashcards</button>
+
+      <div class="response" id="responseOutput"></div>
+    </div>
   </div>
 
   <script>
@@ -169,13 +268,18 @@
       const inputText = document.getElementById("promptInput").value;
       const responseBox = document.getElementById("responseOutput");
 
+      if (!inputText.trim()) {
+        responseBox.innerHTML = '<p style="color: #ef4444; text-align: center;">Please enter some study material to generate flashcards.</p>';
+        return;
+      }
+
       const prompt = `Generate ${slider} flashcards based on this content with the goal to prepare me for a test on this material. Format each card exactly as:
 Q: [question]
 A: [answer]
 Do not include any additional text or explanations since format is very important.
 Content: ${inputText}`;
 
-      responseBox.innerHTML = '<p class="loading">Thinking...</p>';
+      responseBox.innerHTML = '<p class="loading">🧠 Generating your flashcards...</p>';
 
       try {
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
@@ -194,7 +298,7 @@ Content: ${inputText}`;
         showFlashcards(flashcards);
 
       } catch (error) {
-        responseBox.textContent = "Error: " + error.message;
+        responseBox.innerHTML = `<p style="color: #ef4444; text-align: center;">Error: ${error.message}</p>`;
       }
     }
 
@@ -216,7 +320,13 @@ Content: ${inputText}`;
 
     function showFlashcards(cards) {
       const container = document.getElementById("responseOutput");
-      container.innerHTML = "";
+      
+      if (cards.length === 0) {
+        container.innerHTML = '<p style="color: #ef4444; text-align: center;">Could not generate flashcards. Please try with different content.</p>';
+        return;
+      }
+
+      container.innerHTML = `<h3 style="text-align: center; color: #111827; margin-bottom: 20px;">Your Flashcards (Click to flip)</h3>`;
 
       cards.forEach((card, i) => {
         const flashcard = document.createElement("div");
@@ -225,16 +335,17 @@ Content: ${inputText}`;
         innercard.className = "innercard";
         innercard.innerHTML = `
           <div class="cardfront">
-            <strong>Q${i + 1}:</strong> ${card.question}
+            <div><strong>Question ${i + 1}:</strong><br><br>${card.question}</div>
           </div>
           <div class="cardback">
-            <strong>A:</strong> ${card.answer}
+            <div><strong>Answer:</strong><br><br>${card.answer}</div>
           </div>
         `;
 
         innercard.addEventListener("click", function() {
           this.classList.toggle("flipped");
         });
+        
         flashcard.appendChild(innercard);
         container.appendChild(flashcard);
       });
