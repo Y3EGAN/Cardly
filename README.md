@@ -17,7 +17,3 @@ Cardly turns your notes into interactive flashcards in seconds using the Google 
 ## Why We Made It
 
 We built Cardly to make studying more efficient and less stressful. Active recall is one of the most effective study methods, and we wanted to automate it.
-
-## Try It
-
-[Cardly]([url](https://quiz-ai-sandy.vercel.app/))
