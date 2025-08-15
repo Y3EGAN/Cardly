@@ -27,10 +27,24 @@
       align-items: center;
       text-align: center;
       color: white;
-      background: linear-gradient(135deg, #4a90e2, #50c878);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       padding: clamp(24px, 5vw, 64px) 20px clamp(120px, 12vw, 180px);
     }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      animation: gridMove 20s linear infinite;
+    }
 
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(10px, 10px); }
+    }
     .header h1 {
       font-size: clamp(28px, 6vw, 56px);
       font-weight: 800;
@@ -126,12 +140,33 @@
 
     input[type="range"] {
       width: 100%;
-      accent-color: #4a90e2;
+      height: 6px;
+      border-radius: 3px;
+      background: #e2e8f0;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
     }
 
     button {
       width: 100%;
-      background-color: #4a90e2;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
       border: none;
       padding: 12px;
@@ -139,13 +174,13 @@
       font-size: 16px;
       font-weight: 500;
       cursor: pointer;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
       transition: all 0.3s ease;
     }
 
     button:hover {
-      background-color: #2b5484;
-      transform: translateY(-1px);
-      box-shadow: 0 5px 15px rgba(32, 86, 63, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
     }
 
     .response {
@@ -198,13 +233,13 @@
     }
 
     .cardfront {
-      background-color: #ffffff;
+      background: #ffffff;
       color: #1f2937;
       border: 2px solid #e5e7eb;
     }
 
     .cardback {
-      background: linear-gradient(135deg, #4a90e2, #50c878);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
       transform: rotateY(180deg);
       box-shadow: inset 0 2px 4px rgba(255,255,255,0.1);
@@ -219,11 +254,11 @@
 
     @media (max-width: 480px) {
       .header {
-    padding: 40px 15px 120px; /* More breathing room */
+    padding: 40px 15px 120px; 
   }
 
   .header h1 {
-    font-size: 26px; /* Lock for tiny screens */
+    font-size: 26px; 
   }
 
   .header p {
@@ -306,20 +341,29 @@ Content: ${inputText}`;
     }
 
     function createFlashcard(text) {
-      const flashcards = [];
-      const lines = text.split('\n').filter(line => line.trim());
+  const flashcards = [];
+  const lines = text.split('\n').filter(line => line.trim());
 
-      for (let i = 0; i < lines.length; i += 2) {
-        if (lines[i] && lines[i + 1]) {
-          flashcards.push({
-            question: lines[i].replace(/^Q:\s*/, ''),
-            answer: lines[i + 1].replace(/^A:\s*/, '')
-          });
-        }
-      }
+  for (let i = 0; i < lines.length; i += 2) {
+    const questionLine = lines[i] || "";
+    const answerLine = lines[i + 1] || "";
 
-      return flashcards;
+    if (!questionLine.trim().startsWith("Q:")) {
+      throw new Error("Please try again.");
     }
+
+    if (!answerLine.trim().startsWith("A:")) {
+      throw new Error("Please try again.");
+    }
+
+    flashcards.push({
+      question: questionLine.replace(/^Q:\s*/, ''),
+      answer: answerLine.replace(/^A:\s*/, '')
+    });
+  }
+
+  return flashcards;
+}
 
     function showFlashcards(cards) {
       const container = document.getElementById("responseOutput");
