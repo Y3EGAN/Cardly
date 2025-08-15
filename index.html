@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AI Flashcard Generator</title>
+  <title>Cardly</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
@@ -14,11 +14,13 @@
     }
 
     body {
+      font-size: 16px;
+      line-height: 1.6;
       background: #f8fafc;
     }
 
     .header {
-      min-height: 60vh;
+      position:relative;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -26,23 +28,23 @@
       text-align: center;
       color: white;
       background: linear-gradient(135deg, #4a90e2, #50c878);
-      position: relative;
-      padding: 2rem;
+      padding: clamp(24px, 5vw, 64px) 20px clamp(120px, 12vw, 180px);
     }
 
     .header h1 {
-      font-size: 3.5rem;
+      font-size: clamp(28px, 6vw, 56px);
       font-weight: 800;
       margin-bottom: 15px;
       text-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
     }
 
     .header p {
-      font-size: 1.3rem;
+      font-size: clamp(16px, 3.2vw, 20px);
       max-width: 700px;
       line-height: 1.6;
       margin: 0 auto;
       text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      overflow-wrap: anywhere;
     }
 
 
@@ -51,6 +53,7 @@
         bottom: 0;
         left: 0;
         width: 100%;
+        height: clamp(100px, 12vw, 160px);
         overflow: hidden;
         line-height: 0;
         transform: rotate(180deg);
@@ -60,7 +63,7 @@
         position: relative;
         display: block;
         width: calc(100% + 1.3px);
-        height: 150px;
+        height: 100%;
     }
 
     .custom-shape-divider-bottom-1754690899 .shape-fill {
@@ -214,26 +217,26 @@
       padding: 20px;
     }
 
-    @media (max-width: 768px) {
-      .header h1 {
-        font-size: 2.5rem;
-      }
-      
-      .header p {
-        font-size: 1.1rem;
-      }
-      
-      .container {
-        margin: 20px;
-        padding: 20px;
-      }
+    @media (max-width: 480px) {
+      .header {
+    padding: 40px 15px 120px; /* More breathing room */
+  }
+
+  .header h1 {
+    font-size: 26px; /* Lock for tiny screens */
+  }
+
+  .header p {
+    font-size: 15px;
+  }
     }
+
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>AI Flashcard Generator</h1>
-    <p>Transform your study material into interactive flashcards using the power of AI. Simply paste your content and let our intelligent system create personalized study cards for you.</p>
+    <h1>Cardly</h1>
+    <p>Transform your study material into interactive flashcards using the power of AI. Just paste your content and let our system create personalized study cards for you.</p>
     
     <div class="custom-shape-divider-bottom-1754690899">
       <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -279,7 +282,7 @@ A: [answer]
 Do not include any additional text or explanations since format is very important.
 Content: ${inputText}`;
 
-      responseBox.innerHTML = '<p class="loading">🧠 Generating your flashcards...</p>';
+      responseBox.innerHTML = '<p class="loading"> Generating your flashcards...</p>';
 
       try {
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
