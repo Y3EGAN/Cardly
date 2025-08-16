@@ -14,6 +14,6 @@ Cardly turns your notes into interactive flashcards in seconds using the Google 
 * **HTML, CSS, JavaScript**
 * **Google Gemini API**
 
-## Why We Made It
+## Why I Made It
 
-We built Cardly to make studying more efficient and less stressful. Active recall is one of the most effective study methods, and we wanted to automate it.
+I built Cardly to give students the opportunity to build confidence in their knowledge. Exams can often feel uncertain, and I wanted to create a tool that takes the stress off of studying. 
