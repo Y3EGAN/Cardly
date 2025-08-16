@@ -6,8 +6,8 @@ Cardly turns your notes into interactive flashcards in seconds using the Google 
 
 1. **Enter your study content**
 2. **Choose the number of flashcards**
-3. **Cardly generates Q\&A cards instantly**
-4. **Click to flip and test your recall**
+3. **Instantly generates flashcards**
+4. **Test your understanding and click to reveal answers**
 
 ## Built With
 
